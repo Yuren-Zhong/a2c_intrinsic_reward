@@ -9,6 +9,7 @@ gym
 gym[atari]
 opencv
 ```
+Additionally, `CUDA` should be available.
 ### To run the agents
 ```bash
 # For simple policy-gradient:
