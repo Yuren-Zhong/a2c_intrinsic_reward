@@ -11,6 +11,10 @@ opencv
 ```
 ### To run the agents
 ```bash
+# For simple policy-gradient:
+python pg.py
+# For simple policy-gradient with intrinsic reward:
+python pg_r_in.py
 # For A2C:
 python original_actor_critic.py
 # For A2C with intrinsic reward:
