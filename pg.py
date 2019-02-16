@@ -30,24 +30,20 @@ def main():
     # Plot duration curve: 
     # From http://pytorch.org/tutorials/intermediate/reinforcement_q_learning.html
     episode_durations = []
+    duration_means = []
     def plot_durations():
         plt.figure(2)
         plt.clf()
-        durations_t = torch.FloatTensor(episode_durations)
         plt.title('Training...')
         plt.xlabel('Episode')
         plt.ylabel('Duration')
-        plt.plot(durations_t.numpy())
-        # Take 100 episode averages and plot them too
-        if len(durations_t) >= 100:
-            means = durations_t.unfold(0, 100, 1).mean(1).view(-1)
-            means = torch.cat((torch.zeros(99), means))
-            plt.plot(means.numpy())
+        plt.plot(np.array(episode_durations))
+        plt.plot(np.array(duration_means))
 
         plt.pause(0.001)  # pause a bit so that plots are updated
 
     # Parameters
-    num_episode = 5000
+    num_episode = 500000
     batch_size = 5
     learning_rate = 0.01
     gamma = 0.99
@@ -96,6 +92,11 @@ def main():
 
             if done:
                 episode_durations.append(t + 1)
+                if e == 0:
+                    duration_means.append(t + 1)
+                else:
+                    last_mean = duration_means[-1]
+                    duration_means.append(last_mean + (t + 1 - last_mean)/(e+1))
                 plot_durations()
                 break
 
